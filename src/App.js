@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './NavBar';
+import UserList from './UserList'
 
 function App() {
+  const [userList, setUserList] = useState();
+  const [error, setError] = useState(null);
+useEffect(()=>{
+axios.get("https://jsonplaceholder.typicode.com/users")
+ 
+.then(res=>{setUserList(res.data); console.log(res.data)})
+.catch(err=>{setError(err); console.log(error)})
+},[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar/>
+      <UserList userList={userList}/>
     </div>
   );
 }
